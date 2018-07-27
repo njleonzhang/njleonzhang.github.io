@@ -884,6 +884,7 @@ switch(a) {
 ```
 
 ## noImplicitAny, noImplicitReturns, noImplicitThis and noImplicitUseStrict
+
 | Option | Type | Default | Desc |
 | -- | -- | -- | --|
 | --noImplicitAny | boolean | false | Raise error on expressions and declarations with an implied any type. |
@@ -1028,6 +1029,7 @@ outFile: 把所有的文件拼接并生成到单个文件中。
 > 实测怎么设置似乎都不起作用。😂
 
 ## preserveSymlinks
+
 | Option | Type | Default | Desc |
 | -- | -- | -- | --|
 | preserveSymlinks | boolean | false | Do not resolve symlinks to their real path; treat a symlinked file like a real one. |
