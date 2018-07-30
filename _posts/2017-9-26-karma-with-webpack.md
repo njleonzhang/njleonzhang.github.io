@@ -6,7 +6,7 @@ categories: test
 tags: karma mocha
 ---
 
-[前文中](https://github.com/njleonzhang/blog/issues/3)，我们探讨了karma的工作的一些基本过程。但是，我并没有提及es6相关的内容, 本文来填这个坑。
+[前文中](https://njleonzhang.github.io/2017/09/16/karma1.html)，我们探讨了karma的工作的一些基本过程。但是，我并没有提及es6相关的内容, 本文来填这个坑。
 
 # 抛出疑问
 在现有的karma + webpack项目里，我们经常看到这样的配置，以[vue-webpack](https://github.com/vuejs-templates/webpack/blob/master/template/test/unit/index.js)生成的代码为例：
