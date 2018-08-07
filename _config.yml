@@ -74,5 +74,10 @@ RSS: false
 # See: https://github.com/kaeyleo/jekyll-theme-H2O/issues/35
 permalink: /:year/:month/:day/:title.html
 
+# jekyll-relative-links config
+relative_links:
+  enabled: true
+  collections: true
+
 # Plugins
-plugins: [jekyll-paginate]
+plugins: [jekyll-paginate, jekyll-relative-links]
