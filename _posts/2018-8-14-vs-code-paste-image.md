@@ -61,7 +61,8 @@ OK, 打完收工，看一下效果：
 ![](https://user-images.githubusercontent.com/13174059/43623851-146acf7e-9716-11e8-83b9-6fc68bcce2e0.gif)
 
 > electron 进程单独做成了一个 npm 包，以减小插件的大小
-> 具体使用和注意事项：请参照[项目工程](https://github.com/njleonzhang/vscode-extension-mardown-image-paste)的 readme.
+
+> 关于这个插件具体使用和注意事项：请参照[项目工程](https://github.com/njleonzhang/vscode-extension-mardown-image-paste)的 readme.
 
 # 总结
 实现的代码虽然很简单，但是找到解决方案的过程真的很曲折。把思路和最终的工具分享在此，希望对大家有用。
