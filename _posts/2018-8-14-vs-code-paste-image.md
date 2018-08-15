@@ -32,11 +32,11 @@ tags: vscode extension
 
 完美的计划！
 
-<img src="http://pcs7p33sr.bkt.clouddn.com/0356c9cb-809a-a61b-f260-4b0c1afb0207" style='width: 300px' />
+<img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/56eefaa6-1939-a474-7a84-0601702003db.png" style='width: 300px' />
 
 **但是**，步骤3缺是一个难点。目前还没有纯 node.js 的库能够从系统剪贴板里拿到图片，具体讨论可参照讨论：[vscode issue 217](https://github.com/Microsoft/vscode/issues/217) 和 [vscode issue 4972](https://github.com/Microsoft/vscode/issues/4972)。
 
-![](http://pcs7p33sr.bkt.clouddn.com/58efb5f5-51b1-da49-2e73-9b5e92be6aa0)
+![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/b38cc6b9-25dc-a55f-2498-29ceb0162d4f.png)
 
 # 现有的方案
 目前开源的方案有 [vscode-paste-image](https://github.com/mushanshitiancai/vscode-paste-image). 这个插件另辟蹊径，在 mac 系统里，使用 [applescript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html) 读取系统剪贴板里的图片，在 windows 系统上使用 [powershell](https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6), 在 linux 上使用 bash 和 一个剪贴板工具库 [xclip](https://github.com/astrand/xclip). 总体来说，就是每次都开一个进程去执行一段脚本来读取剪贴板里的图片。
