@@ -56,6 +56,8 @@ tags: vscode extension
 
 接下来的事情就简单了，我选用 [tinypng](https://tinypng.com/) 来压缩图片，然后将图片放到 cdn 上，目前只支持[七牛](https://www.qiniu.com/en)。
 
+> 8月16日更新，七牛不允许使用测试域名了，所以没有备案域名就不能再用了，现在实现了对 github 的做 CDN 的支持。
+
 OK, 打完收工，看一下效果：
 
 ![](https://user-images.githubusercontent.com/13174059/43623851-146acf7e-9716-11e8-83b9-6fc68bcce2e0.gif)
