@@ -197,7 +197,7 @@ tags: rem viewport flexible
 关于第2点：这段 js 代码我已经为你写好了 [lib-flexible-for-dashboard](https://github.com/QuellingBlade/lib-flexible-for-dashboard), 直接嵌入你的 html 里就行。考虑到这段 js 代码，会计算 font-size 的值，这个值会决定所有的长度，所以这个值要优先计算出来，最好的方案就是把这段代码拷贝到 html 的 head 里去（这个操作被称为 inline）. 为了方便你使用webpack 和 npm 管理这个库，我们还为你准备了一个 [webpack 插件](https://github.com/QuellingBlade/html-webpack-inline-plugin)，助去做 inline.
 
 # 示例
-> talk is cheap, show me the [code](http://www.njleonzhang.com/flexible-pc-full-screen/)
+> talk is cheap, show me the [code](https://github.com/njleonzhang/flexible-pc-full-screen)
 
 设计稿是这样的一个 1920 * 1280（16：9）的图:
 ![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
@@ -218,7 +218,7 @@ iframe 太小所以 echart 里的图会挤在一起看不清, 但是整个页面
 
 > 相关项目：
 
-  http://www.njleonzhang.com/flexible-pc-full-screen/
+  https://github.com/njleonzhang/flexible-pc-full-screen
   https://github.com/QuellingBlade/postcss-px-to-rem
   https://github.com/QuellingBlade/lib-flexible-for-dashboard
   https://github.com/QuellingBlade/html-webpack-inline-plugin
