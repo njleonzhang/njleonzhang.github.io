@@ -53,22 +53,6 @@ tags: rem viewport flexible
 
   > 可以在浏览器中打开，改变窗口大小页面来体验这个[flexible方案](https://quellingblade.github.io/postcss-px-to-rem/percent.html)
 
-  也许这个例子太简单了，那么我们来看一个相对复杂的真实的[例子](http://www.njleonzhang.com/flexible-pc-full-screen/):
-
-  设计稿是这样的一个 1920 * 1280（16：9）的图:
-  ![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
-
-  看看我们实现的[效果](http://www.njleonzhang.com/flexible-pc-full-screen/):
-
-  <div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/'>
-  </div>
-
-  <div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='300' data-height='300'></div>
-
-  <div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='600' data-height='300'></div>
-
-  iframe 太小所以 echart 里的图会挤在一起看不清, 但是整个页面确实是能够保持对屏幕的适应的。
-
 # rem 方案
 
   熟悉移动端的自适应方案的朋友对 rem 适应方案，肯定不陌生，最出名的就是阿里的 [lib-flexible](https://github.com/amfe/lib-flexible) 方案。可能你已经猜到，本文的这个方案肯定也是基于 rem 的.
@@ -119,28 +103,30 @@ tags: rem viewport flexible
   * 所有长度的比例必然和设计图一致。
   * 实际的显示长度完全由 `html 的 font-size` 值决定（线性关系）。
 
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
-
   我们来证明一下：
 
-> 假设设计稿上有2条线: A 和 B, A 的长度为 `x`, B 的长度为 `y`, `计算 rem 值的基准`为 `z` <br/>
-> 那么 css 里，A 和 B 的长度分别为 `x` / `z` (rem), `y` / `z`（rem）
+> 设：设计稿上有任一1条线: A, A 的长度为 `x`, `计算 rem 值的基准`为 `z` <br/>
+> 那么 css 里，A 的长度表示为 `x` / `z` (rem)
 >
->  再设网页运行时的 html 的 font-size 值为 `fs`，
+> 设网页运行时的 html 的 font-size 值为 `fs`，
 >
->  那么 A 和 B 的真实长度就分别为 `x` / `z` * `fs` (px) 和 `y` / `x` * `fs` (px)
->
->  设计图上 A 长度 和 B 长度的比例为：`x` : `y` <br/>
->  真实网页中 A 长度 和 B 长度的比例为: (`x` / `z` * `fs`) / (`y` / `x` * `fs`) = `x` : `y`
+>  那么 A 的实际显示长度就分为 `x` / `z` * `fs` (px)
 >
 >  所以：
->    1. 设计图上 A 长度 和 B 长度的比例 必然等于 真实网页中 A 长度 和 B 长度。
->    2. x, y, z 都是固定值，那么 A 和 B 的真实值由 fs 来决定了。（线性关系）
+>    1. 对于任意2条线，其实际长度的比例为 `(x1` / `z` * `fs`) ： (`x2` / `z` * `fs`) 就等于 他们在设计图上的比例 `x1` : `x2`
+>    2. 对于任意一条线，`x` 和 `z` 是固定值，其实际值随着 `fs`值线性关系变化的
 
+  我们取设计图的边框的4条线来分析, 那么`设计稿`，`真实显示（画布）`和 `显示窗口（全屏时，即为屏幕）`的关系如下图所示:
 
-  所以，用了上面提到的 rem 来方案后，我们做出来的页面是一个**和设计稿比例一致的**，并且**大小根据网页运行时的 html 的 font-size的值缩放**的页面。
+  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
 
-  既然页面的大小可以按**html 的 font-size的值**缩放，那么如果我希望页面的宽度始终和浏览器窗口保持一致的话（即下图这样的状态），**html 的 font-size的值**应该如何设置呢？
+  * 设计稿的长宽分必然为`ax` 和 `ay`, 比例为 `x` : `y`.
+  * 实际显示的大小比例和设计稿保持一致，顾而设为 `bx` : `by`. 且所有线的实际显示长度是由 `html 的 font-size 值` `fs` 线性决定的。
+  * 屏幕的尺寸不确定，假设其宽度为 `w`, 高度为 `h`
+
+  > 小结一下，用了上面提到的 rem 来方案后，我们做出来的页面是一个**和设计稿比例一致的**，并且**大小根据网页运行时的 html 的 font-size的值缩放**的页面。
+
+  既然页面的大小可以按**html 的 font-size的值**缩放，那么如果我希望**画布的实际显示宽度**始终和**浏览器窗口宽度**保持一致的话（即下图这样的状态），**html 的 font-size的值**应该如何设置呢？
 
   <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
 
@@ -148,48 +134,85 @@ tags: rem viewport flexible
 
   >  假设，设计稿窗口宽为 `ax`，高为 `ay`, 则`计算 rem 值的基准` `z` 为 `ax` / `q`<br/>
   >
-  >  那么按上面的公式，浏览器中真实页面的<br/>
+  >  那么按上面的公式，浏览器中画布实际的<br/>
   >    宽度为 `ax` / (`ax` / `q`) * `fs` = `fs` * `q`，<br/>
   >    高度为 `ay` / (`ax` / `q`) * `fs` = `q` * `y` * `fs` / `x`
   >
-  >  假设浏览器窗口的宽度为 `w`，那么当 `w` = `fs` * `q` 的时候，
-  >  浏览器中真实页面的宽度就等于浏览器的宽度了, `fs` = `w` / `q`
+  >  浏览器窗口的宽度 `w` 要等于画布实际的宽度，即 `w` = `fs` * `q`，
+  >  那么 `fs` = `w` / `q`
 
-  好的，从数学回到我们的工程中来，我们的设计稿尺寸是 1920 * 1280。我们取 `q` 这个值为 10, 则 `计算 rem 值的基准` `fs` 为 `ax` / `q` = 1920 / 10 = 192. 然后我们把**所有元素的长、宽、位置、字体大小等原来 `px` 单位都转换成 rem**，网页加载后，我们**用 js 去计算当前浏览器窗口的宽度，并设置 `html 的 font-size` `fs` 为`当前浏览器窗口的宽度` `w `的 1 / q**, 即 `w` / 10，这样我们就做出了一个**100%宽度的、等比例缩放设计稿的页面**了。
+  好的，从数学回到我们的工程中来，我们的设计稿尺寸是 1920 * 1280。我们取 `q` 这个值为 10, 则 `计算 rem 值的基准` `z` 为 `ax` / `q` = 1920 / 10 = 192. 然后我们把**所有元素的长、宽、位置、字体大小等原来 `px` 单位都转换成 rem**，网页加载后，我们**用 js 去计算当前浏览器窗口的宽度，并设置 `html 的 font-size` `fs` 为`当前浏览器窗口的宽度` `w` 的 `q` 分之1**, 即 `w` / 10，这样我们就做出了一个**100%宽度的、等比例缩放设计稿的页面**了。
+
+  > 通过这样的设置，我就得到了一个**和设计稿比例一致的**，**宽度与窗口大小一致**的页面。
 
   到此为止，就是现有 rem 方案的核心内容了。
 
-  说了半天，都是别人的方案，读者可能会问了，那博主你干了啥？是时候来说说我到底干了什么了。
+  说了半天，都是别人的方案，读者可能会问了，那博主你干了啥？
 
 # 我的方案
   回头想一下，我们要的是什么？现在这个方案，能满足我们的要求么？我们来逐条分析：
-  * 屏幕尺寸和设计稿比例(16:9)一致时，占满屏幕
+  * 屏幕（窗口）尺寸和设计稿比例(16:9)一致时，占满屏幕
   <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/327c8e32-cb68-0615-fa7f-b0bbec3dc4f1.png" width='500'>
 
   这种情况肯定没问题，屏幕和真实页面完美重合.
 
-  * 屏幕尺寸比设计图比例瘦时，上下留白，左右占满，并上下居中, 显示的比例保持16：9
+  * 屏幕（窗口）尺寸比设计图比例瘦时，上下留白，左右占满，并上下居中, 显示的比例保持16：9
   <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
   这种情况也没问题，真实页面高度小于屏幕，然后页面内容上下居中就可以了。
 
-  * 屏幕尺寸比设计图比例胖时，左右留白，上下占满，并左右居中, 显示的比例保持16：9
+  * 屏幕（窗口）尺寸比设计图比例胖时，左右留白，上下占满，并左右居中, 显示的比例保持16：9
   <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/c2b3b4d8-759c-14ce-2ffe-6ab2f59b15b4.png" width='500'>
 
   问题出现了，在这种场景下，页面的高度超出了屏幕的高度，这就会导致垂直滚动条了。这就是我的方案处理的地方了。
-  在这种场景下，我们需要页面的高度缩小为屏幕的高度，同时将页面的宽度等比例缩小。即如下图所示:
+  在这种场景下，我们需要页面的高度缩小为屏幕的高度，当然为了保持比例页面的宽度等也要等比例缩小.
+  换句话说我们要把所有的线的长度等比例缩小，缩小后画布的高度要等于屏幕的高度，即下图所示的状态:
+
   <img src='https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/d312b3ec-ded3-746f-9e59-7daa68811f30.png' width='500'>
 
-  解决的关键还是在于 `html 的 font-size` 的值该如何设置。看一下我们上面的推到，有一个高度，我算了但是并没有用：
+  要等比例缩小所有的长度，那么实际上操作中，就是要缩小于 `html 的 font-size` 的值。看一下我们上面的分析中，关于画布的真是高度，我算了但是并没有用：
 
-  > 那么按上面的公式，浏览器中真实页面(画布元素)的<br/>
+  > 那么按上面的公式，浏览器中画布的真实<br/>
   > 高度为 `ay` / (`ax` / `q`) * `fs` = `q` * `y` * `fs` / `x`
 
-  在此场景下，我们需要把页面（画布）高度值缩小到屏幕的高度,
-
+  在此场景下，我们需要把画布真实高度值缩小到屏幕的高度,
 
   > 设窗口的高度为 `h`,<br/>
-  > 则我们需要在页面（画布）高度（`q` * `y` * `fs` / `x`）乘上个系数: `x` * `h` / (`q` * `y` * `fs`) <br/>
+  > 则我们需要在页面（画布）高度（`q` * `y` * `fs` / `x`）乘上个缩小系数: `x` * `h` / (`q` * `y` * `fs`) <br/>
   > 因为 `fs` = `w` / `q`, 我们变换一下: <br/>
-  > `x` * `h` / `q` * `y` * `fs` = `x` * `h` / (`q` * `y` * `w`) * `q` = (`x` / `y`) / (`w` / `h`), 即设计稿宽高比 / 窗口宽高比
+  > `x` * `h` / （`q` * `y` * `fs`） = `x` * `h` / (`q` * `y` * `w`) * `q` = (`x` / `y`) / (`w` / `h`), 即设计稿宽高比 / 窗口宽高比
 
-  Bingo. 在这种特殊的场景下，我们把页面缩小，即乘上`设计稿宽高比 / 窗口宽高比`，就可以现实我们想要的效果了。
+  Bingo. 当窗口尺寸比设计图比例胖时，只要我们在原来 `fs` 值的基础上，乘上`设计稿宽高比 / 窗口宽高比`，就可以实现我们想要的效果了。
+
+# 工程应用
+好了，前面的理论，你看着头疼，我写着更头疼。终于到了喜闻乐见的运用环节了。
+
+按照前面的一顿操作，应用这个方案，我们需要做2件事:
+（以设计稿的尺寸为 1920 * 1280 为例）
+  1. 在 css 表示长度的时候，用设计稿上的长度除以 192, 算得 rem 的值。（算死你）
+  2. 页面内写一段 js 代码，根据我们上面的公式去计算并设置 `html 元素的 font-size` 值。
+
+关于第1点：如果告诉你所有的长度你要自己算。。。可能这个方案马上就没人用了，因为真的要算死人。参照 [lib-flexible](https://github.com/amfe/lib-flexible) 的方案，我写了一个 [post-css 插件](https://github.com/QuellingBlade/postcss-px-to-rem)来帮助你做这个计算，效果就是你不用算了，图上是多少长度，你写多少就行了，这个 rem 的转换由[插件](https://github.com/QuellingBlade/postcss-px-to-rem)完成。
+
+关于第2点：这段 js 代码我已经为你写好了 [lib-flexible-for-dashboard](https://github.com/QuellingBlade/lib-flexible-for-dashboard), 直接嵌入你的 html 里就行。考虑到这段 js 代码，会计算 font-size 的值，这个值会决定所有的长度，所以这个值要优先计算出来，最好的方案就是把这段代码拷贝到 html 的 head 里去（这个操作被称为 inline）. 为了方便你使用webpack 和 npm 管理这个库，我们还为你准备了一个 [webpack 插件](https://github.com/QuellingBlade/html-webpack-inline-plugin)，助去做 inline.
+
+# 示例
+> talk is cheap, show me the code
+
+设计稿是这样的一个 1920 * 1280（16：9）的图:
+![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
+
+[代码](http://www.njleonzhang.com/flexible-pc-full-screen/):
+
+看看我们实现的[效果](http://www.njleonzhang.com/flexible-pc-full-screen/):
+
+<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/'>
+</div>
+
+<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='300' data-height='300'></div>
+
+<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='600' data-height='300'></div>
+
+iframe 太小所以 echart 里的图会挤在一起看不清, 但是整个页面确实是能够保持对屏幕的适应的。
+
+# 总结
+我是站在巨人的肩膀上，针对全屏 pc 页面这一特别场景做出了一个个人比较满意的方案，希望能给有需要的朋友一些帮助。
