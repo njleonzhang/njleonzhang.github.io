@@ -6,23 +6,23 @@ categories: solution
 tags: rem viewport flexible
 ---
 
-通常来说PC端的页面并不像移动端页面那样对屏幕大小和分别率有那么强的依赖。一般的页面都是取屏幕中间的一块宽度(1280px), 两边留白, 高度随着内容的长度滚动。这样无论窗口怎么变化，页面都是可用的。比如，我们的这个[页面](http://zywulian.com/static/html/solution/community-ai.html). 然而也有少数的页面，天生就是要在 pc 端全屏显示的，其中最为典型的代表就是全屏的 dashboard 页面。
+通常来说PC端的页面并不像移动端页面那样对屏幕大小和分别率有那么强的依赖。一般的页面都是取屏幕中间的一块宽度(1280px), 两边留白, 高度随着内容的长度滚动。这样无论窗口怎么变化，页面都是可用的。比如，我们的这个[页面](http://zywulian.com/static/html/solution/community-ai.html). 然而也有少数的页面，天生就是要在 pc 端全屏显示的，其中最为典型的代表就是全屏的 dashboard 页面。比如：
 
 当然，如果 dashboard 页面是内嵌在一些管理页面里的，通常是允许滚动的。
 ![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/ba7c9abd-2f10-3890-cfed-f8c389248b53.png)
 
-但是，如果 dashboard 是用于官司宣传，在电视机或者广告屏上的展示的时候，通常是不允许滚动条出现的。
+但是，如果 dashboard 是用于官方宣传，比如在电视机或者广告屏上的展示的时候，通常是不允许滚动条出现的。比如:
 
 ![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/0349a840-ed31-06be-207c-e748883522b7.png)
 
-> 这种 dashboard 似乎有个帅气的名字叫数据可视化。
+> 这种 dashboard 有个帅气的名字叫数据可视化。
 
 # 通常的做法
 为了实现全屏的这种 dashboard, 通常的做法就是要对宽度和高度都做百分比（网格）来实现了。但是这种方案的缺点在于:
   * 实现太麻烦。设计师给的设计稿通常是 px 为单位标注的，我们需要仔细的计算宽度和高度的比例，然后小心处理页面的布局。
   * 难以处理屏幕宽高比与设计图不符时，带来的元素变形。所以最后展示的屏幕不能和设计稿的屏幕的宽高比差距太大。
 
-  比如，下面这个简单的页面就是用百分比方案来做的，设计师给的图是一个 16: 9 的全屏效果，如果我们就用百分比来做，效果可能就是这样的：
+  比如，下面这个简单的页面就是用百分比方案来做的。设计师给的图的比例为 16: 9。
 
   <div class='sizable-iframe' data-link='https://quellingblade.github.io/postcss-px-to-rem/percent.html'>
   </div>
@@ -32,7 +32,7 @@ tags: rem viewport flexible
 
   <br/>
 
-  随着窗口比例的变化，整个画面会跟着变形。
+  当窗口比例是 16 : 9 的时候黄色的长方形显示符合设计，当窗口变成正方形的时候，黄色部分也跟着变方了，这必然会影响显示效果。
 
   > 可以在浏览器中打开，改变窗口大小页面来体验这个[百分比方案](https://quellingblade.github.io/postcss-px-to-rem/percent.html)。
 
@@ -51,13 +51,14 @@ tags: rem viewport flexible
   * 屏幕尺寸比设计图比例胖时，左右留白，上下占满，并左右居中, 显示的比例保持16：9
   <div class='sizable-iframe' data-link='https://quellingblade.github.io/postcss-px-to-rem' data-width='600' data-height='300'></div>
 
+  <br/>
   > 可以在浏览器中打开，改变窗口大小页面来体验这个[flexible方案](https://quellingblade.github.io/postcss-px-to-rem/percent.html)
 
 # rem 方案
 
   熟悉移动端的自适应方案的朋友对 rem 适应方案，肯定不陌生，最出名的就是阿里的 [lib-flexible](https://github.com/amfe/lib-flexible) 方案。可能你已经猜到，本文的这个方案肯定也是基于 rem 的.
 
-  rem (font size of the root element), 是 css3 的引入的一个大小单位。即相对于根元素的 font-size 值的相对大小。所谓根元素在网页里一般就是 html, 如下例 html 的 font-size 大小是 20px, 那么 1.4rem 和 2.4 rem 就分别代表着 28px 和 48px 了。
+  rem (font size of the root element), 是 css3 的引入的一个大小单位。即相对于根元素的 font-size 值的大小。所谓根元素在网页里一般就是 html. 举例说明：下例中，`html 的 font-size 大小`是 20px, 那么 1.4rem 和 2.4 rem 就分别代表着 28px 和 48px 了。
 
   ```
     html { font-size: 20px; }
@@ -69,7 +70,7 @@ tags: rem viewport flexible
     }
   ```
 
-  以上文中提到的设计稿为例，其尺寸为 1920 * 1280 px. 为了便于理解，我们先假设实际运行这个网页的屏幕分别率就是 1920 * 1280. 那么，这网页就好做了。简单粗暴地，按图中的元素的尺寸和位置，直接利用绝对定位把所有元素撸出来。比如设计稿中左上角的方形区域的 css, 就这可以这样来写:
+  假设我们的设计稿其尺寸为 1920 * 1280 px，并且实际运行这个网页的屏幕分别率也是 1920 * 1280. 那么，这网页就好做了。简单粗暴地，按图中的元素的尺寸和位置，直接利用绝对定位把所有元素撸出来就行了。比如，设计稿中有这样一个元素:
 
   ```
   .doughnut {
@@ -80,7 +81,7 @@ tags: rem viewport flexible
   }
   ```
 
-  那么现在我不想用 px 了， 我想用 rem 来作为单位。也行，我们把页面的 html 元素的 font-size 设置为 1920 / 10 = 192 px. 那么 `doughnut` 这个元素就应该写作:
+  这不刚介绍了 rem, 我们试着用 rem 为单位来写一下 `doughnut` 元素的 css。我们把页面的 html 元素的 font-size 设置为 1920 / 10 = 192 px. 那么 `doughnut` 这个元素就应该写作:
 
   ``` css
   .doughnut {
@@ -90,9 +91,9 @@ tags: rem viewport flexible
     height: 1.563rem;  // 300 / 192 = 1.564
   }
   ```
-  恩。。。。这不是有病么？算成 rem，然后设置一下 html 的 font-size 让浏览器再算回去？显摆自己的数学好么？我没有那么无聊啊，23333。
+  恩。。。。这不是有病么？算成 rem，然后设置一下 html 的 font-size 让浏览器再算回去？显摆自己的数学好么？23333。
 
-  注意上面说了，假设屏幕大小正好是 1920 * 1280。这个假设真的很假，实际上根本不可能，一旦用了 px 一切长宽都死了。这时你再看一眼 rem 的方案，真实的长度为：
+  注意上上面有一个假设，**屏幕大小正好是 1920 * 1280**。这个假设真的很假，根本不可能，一旦用了 px，那么一切长宽都死了。这时你再看一眼 rem，真实的长度为：
 
     ```
       实际长度(px) = rootFontSize (html 的 font-size) * rem 长度
@@ -196,12 +197,10 @@ tags: rem viewport flexible
 关于第2点：这段 js 代码我已经为你写好了 [lib-flexible-for-dashboard](https://github.com/QuellingBlade/lib-flexible-for-dashboard), 直接嵌入你的 html 里就行。考虑到这段 js 代码，会计算 font-size 的值，这个值会决定所有的长度，所以这个值要优先计算出来，最好的方案就是把这段代码拷贝到 html 的 head 里去（这个操作被称为 inline）. 为了方便你使用webpack 和 npm 管理这个库，我们还为你准备了一个 [webpack 插件](https://github.com/QuellingBlade/html-webpack-inline-plugin)，助去做 inline.
 
 # 示例
-> talk is cheap, show me the code
+> talk is cheap, show me the [code](http://www.njleonzhang.com/flexible-pc-full-screen/)
 
 设计稿是这样的一个 1920 * 1280（16：9）的图:
 ![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
-
-[代码](http://www.njleonzhang.com/flexible-pc-full-screen/):
 
 看看我们实现的[效果](http://www.njleonzhang.com/flexible-pc-full-screen/):
 
@@ -216,3 +215,10 @@ iframe 太小所以 echart 里的图会挤在一起看不清, 但是整个页面
 
 # 总结
 我是站在巨人的肩膀上，针对全屏 pc 页面这一特别场景做出了一个个人比较满意的方案，希望能给有需要的朋友一些帮助。
+
+> 相关项目：
+
+  http://www.njleonzhang.com/flexible-pc-full-screen/
+  https://github.com/QuellingBlade/postcss-px-to-rem
+  https://github.com/QuellingBlade/lib-flexible-for-dashboard
+  https://github.com/QuellingBlade/html-webpack-inline-plugin
