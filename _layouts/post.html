@@ -150,8 +150,40 @@
   {% endif %}
 
   <script src="/assets/js/prism.js"></script>
-  <script src="/assets/js/index.min.js"></script>
+  <!-- <script src="/assets/js/index.min.js"></script> -->
   <script src="https://codesponsor.io/scripts/d9d83955-9c6b-4756-a523-5c916c68d53a/embed.js"></script>
+
+  <script>
+    // sizable-iframe 的 jquery 插件
+    $('.sizable-iframe').map((index, element) => {
+      var $item = $(element)
+      var link = $item.data('link');
+      var width = $item.data('width') || 640;
+      var height = $item.data('height') || 360;
+
+      $item.prepend('<iframe src="' + link +
+        '"></iframe><div class="controller"><input /><input /><button>改变iframe大小</button></div>');
+
+      var $iframe = $item.find('iframe')
+      var inputs = $item.find('input');
+      var $button = $item.find('button');
+      var $widthInput = inputs.eq(0);
+      var $hightInput = inputs.eq(1);
+
+      $iframe
+        .css('width', width)
+        .css('height', height);
+
+      $widthInput.val(width);
+      $hightInput.val(height);
+
+      $button.on('click', _ => {
+        $iframe
+          .css('width', $widthInput.val())
+          .css('height', $hightInput.val())
+      });
+    })
+  </script>
 </body>
 
 </html>

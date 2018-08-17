@@ -19,6 +19,28 @@
     <link rel="stylesheet" href="/assets/css/app.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .sizable-iframe {
+            width: 100%;
+        }
+
+        .sizable-iframe iframe {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .sizable-iframe .controller {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .sizable-iframe + .sizable-iframe {
+            margin-top: 20px;
+        }
+    </style>
 	{% if site.mathjax %}
 	{% include mathjax.html %}
 	{% endif %}
