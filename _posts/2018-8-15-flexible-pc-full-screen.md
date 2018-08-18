@@ -204,12 +204,12 @@ tags: rem viewport flexible
 
 看看我们实现的[效果](http://www.njleonzhang.com/flexible-pc-full-screen/):
 
-<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/'>
+<div class='sizable-iframe' data-link='https://www.njleonzhang.com/flexible-pc-full-screen/'>
 </div>
 
-<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='300' data-height='300'></div>
+<div class='sizable-iframe' data-link='https://www.njleonzhang.com/flexible-pc-full-screen/' data-width='300' data-height='300'></div>
 
-<div class='sizable-iframe' data-link='http://www.njleonzhang.com/flexible-pc-full-screen/' data-width='600' data-height='300'></div>
+<div class='sizable-iframe' data-link='https://www.njleonzhang.com/flexible-pc-full-screen/' data-width='600' data-height='300'></div>
 
 iframe 太小所以 echart 里的图会挤在一起看不清, 但是整个页面确实是能够保持对屏幕的适应的。
 
