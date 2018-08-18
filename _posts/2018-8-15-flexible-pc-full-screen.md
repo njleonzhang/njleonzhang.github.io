@@ -2,7 +2,7 @@
 layout: post
 title: 大屏上的全屏页面的自适应适配方案
 date: 2018-08-15
-categories: solution
+categories: 前端
 tags: rem viewport flexible
 ---
 

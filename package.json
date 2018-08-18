@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "jekyll serve --host 0.0.0.0 --livereload"
+    "dev": "JEKYLL_ENV=dev jekyll serve --host 0.0.0.0 --livereload"
   },
   "author": "",
   "license": "ISC",

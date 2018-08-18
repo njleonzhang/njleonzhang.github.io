@@ -2,7 +2,7 @@
 layout: post
 title: 搬家 - karma如何与测试框架合作2之webpack
 date: 2017-09-26
-categories: test
+categories: 前端
 tags: karma mocha
 ---
 

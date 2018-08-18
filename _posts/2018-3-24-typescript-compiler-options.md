@@ -2,7 +2,7 @@
 layout: post
 title: typescript 2.7 编译选项详解
 date: 2018-03-24
-categories: language
+categories: 前端
 tags: typescript
 ---
 

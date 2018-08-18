@@ -2,7 +2,7 @@
 layout: post
 title: 搬家 - Django项目前端工程化的探索
 date: 2016-08-23
-categories: architecture
+categories: 前端
 tags: Django frontend webpack
 ---
 
