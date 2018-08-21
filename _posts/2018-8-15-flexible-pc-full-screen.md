@@ -170,7 +170,7 @@ tags: rem viewport flexible
 
   <img src='https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/d312b3ec-ded3-746f-9e59-7daa68811f30.png' width='500'>
 
-  要等比例缩小所有的长度，那么实际上操作中，就是要缩小于 `html 的 font-size` 的值。看一下我们上面的分析中，关于画布的真是高度，我算了但是并没有用：
+  要等比例缩小所有的长度，那么实际上操作中，就是要缩小于 `html 的 font-size` 的值。看一下我们上面的分析中，关于画布的真实高度，我计算了，但是并没有使用：
 
   > 那么按上面的公式，浏览器中画布的真实<br/>
   > 高度为 `ay` / (`ax` / `q`) * `fs` = `q` * `y` * `fs` / `x`
