@@ -121,7 +121,7 @@ tags: rem viewport flexible
 
   <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
 
-  * 设计稿的长宽分必然为`ax` 和 `ay`, 比例为 `x` : `y`.
+  * 设计稿的长宽分别为`ax` 和 `ay`, 比例为 `x` : `y`.
   * 实际显示的大小比例和设计稿保持一致，顾而设为 `bx` : `by`. 且所有线的实际显示长度是由 `html 的 font-size 值` `fs` 线性决定的。
   * 屏幕的尺寸不确定，假设其宽度为 `w`, 高度为 `h`
 
