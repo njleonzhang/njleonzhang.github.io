@@ -10,9 +10,25 @@ Author: Ray-Eldath
         line-height: 1;
         opacity: 0;
     }
-    
+
     .markdown-body .anchor .anchor-icon{
         font-size: 15px
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3{
+        cursor: pointer;
+    }
+
+    .markdown-body h1:hover,
+    .markdown-body h2:hover,
+    .markdown-body h3:hover{
+        text-decoration: underline;
+    }
+
+    html{
+        scroll-behavior: smooth;
     }
 </style>
 <script>
@@ -24,16 +40,27 @@ Author: Ray-Eldath
             anchorIcon.setAttribute("class", "fa fa-anchor fa-lg anchor-icon")
             anchorIcon.setAttribute("aria-hidden", true)
             anchor.setAttribute("class", "anchor")
-            anchor.setAttribute("href", "#" + node.getAttribute("id"))
-            
-            anchor.onmouseover = function() {
-                this.style.opacity = "0.4"
+
+            let $node  = $(node)
+
+            node.onmouseover = function() {
+                let $icon = $node.find('a')
+                $icon.css({
+                    opacity: '0.4'
+                })
             }
-            
-            anchor.onmouseout = function() {
-                this.style.opacity = "0"
+
+            node.onmouseout = function() {
+                let $icon = $node.find('a')
+                $icon.css({
+                    opacity: '0'
+                })
             }
-            
+
+            node.onclick = function() {
+                location.hash = node.getAttribute("id")
+            }
+
             anchor.appendChild(anchorIcon)
             node.appendChild(anchor)
         }
