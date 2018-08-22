@@ -9,11 +9,11 @@ tags: rem viewport flexible
 通常来说PC端的页面并不像移动端页面那样对屏幕大小和分别率有那么强的依赖。一般的页面都是取屏幕中间的一块宽度(1280px), 两边留白, 高度随着内容的长度滚动。这样无论窗口怎么变化，页面都是可用的。比如，我们的这个[页面](http://zywulian.com/static/html/solution/community-ai.html). 然而也有少数的页面，天生就是要在 pc 端全屏显示的，其中最为典型的代表就是全屏的 dashboard 页面。比如：
 
 当然，如果 dashboard 页面是内嵌在一些管理页面里的，通常是允许滚动的。
-![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/ba7c9abd-2f10-3890-cfed-f8c389248b53.png)
+![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/ba7c9abd-2f10-3890-cfed-f8c389248b53.png)
 
 但是，如果 dashboard 是用于官方宣传，比如在电视机或者广告屏上的展示的时候，通常是不允许滚动条出现的。比如:
 
-![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/0349a840-ed31-06be-207c-e748883522b7.png)
+![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/0349a840-ed31-06be-207c-e748883522b7.png)
 
 > 这种 dashboard 有个帅气的名字叫数据可视化。
 
@@ -119,7 +119,7 @@ tags: rem viewport flexible
 
   我们取设计图的边框的4条线来分析, 那么`设计稿`，`真实显示（画布）`和 `显示窗口（全屏时，即为屏幕）`的关系如下图所示:
 
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
+  <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
 
   * 设计稿的长宽分别为`ax` 和 `ay`, 比例为 `x` : `y`.
   * 实际显示的大小比例和设计稿保持一致，顾而设为 `bx` : `by`. 且所有线的实际显示长度是由 `html 的 font-size 值` `fs` 线性决定的。
@@ -129,7 +129,7 @@ tags: rem viewport flexible
 
   既然页面的大小可以按**html 的 font-size的值**缩放，那么如果我希望**画布的实际显示宽度**始终和**浏览器窗口宽度**保持一致的话（即下图这样的状态），**html 的 font-size的值**应该如何设置呢？
 
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
+  <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
 
   我们假设 `计算 rem 值的基准` 为设计稿宽度的 q 分之 1:
 
@@ -153,22 +153,22 @@ tags: rem viewport flexible
 # 我的方案
   回头想一下，我们要的是什么？现在这个方案，能满足我们的要求么？我们来逐条分析：
   * 屏幕（窗口）尺寸和设计稿比例(16:9)一致时，占满屏幕
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/327c8e32-cb68-0615-fa7f-b0bbec3dc4f1.png" width='500'>
+  <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/327c8e32-cb68-0615-fa7f-b0bbec3dc4f1.png" width='500'>
 
   这种情况肯定没问题，屏幕和真实页面完美重合.
 
   * 屏幕（窗口）尺寸比设计图比例瘦时，上下留白，左右占满，并上下居中, 显示的比例保持16：9
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
+  <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/19e45d16-534a-9ac3-578c-83bb3f01b45f.png" width='500'>
   这种情况也没问题，真实页面高度小于屏幕，然后页面内容上下居中就可以了。
 
   * 屏幕（窗口）尺寸比设计图比例胖时，左右留白，上下占满，并左右居中, 显示的比例保持16：9
-  <img src="https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/c2b3b4d8-759c-14ce-2ffe-6ab2f59b15b4.png" width='500'>
+  <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/c2b3b4d8-759c-14ce-2ffe-6ab2f59b15b4.png" width='500'>
 
   问题出现了，在这种场景下，页面的高度超出了屏幕的高度，这就会导致垂直滚动条了。这就是我的方案处理的地方了。
   在这种场景下，我们需要页面的高度缩小为屏幕的高度，当然为了保持比例页面的宽度等也要等比例缩小.
   换句话说我们要把所有的线的长度等比例缩小，缩小后画布的高度要等于屏幕的高度，即下图所示的状态:
 
-  <img src='https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/d312b3ec-ded3-746f-9e59-7daa68811f30.png' width='500'>
+  <img src='https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/d312b3ec-ded3-746f-9e59-7daa68811f30.png' width='500'>
 
   要等比例缩小所有的长度，那么实际上操作中，就是要缩小于 `html 的 font-size` 的值。看一下我们上面的分析中，关于画布的真实高度，我计算了，但是并没有使用：
 
@@ -200,7 +200,7 @@ tags: rem viewport flexible
 > talk is cheap, show me the [code](https://github.com/njleonzhang/flexible-pc-full-screen)
 
 设计稿是这样的一个 1920 * 1280（16：9）的图:
-![](https://cdn.rawgit.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
+![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/562e47bd-abda-dae4-7765-68706b5a978e.png)
 
 看看我们实现的[效果](http://www.njleonzhang.com/flexible-pc-full-screen/):
 
