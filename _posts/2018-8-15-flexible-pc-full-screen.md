@@ -121,8 +121,8 @@ tags: rem viewport flexible
 
   <img src="https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/70ef9642-13d0-a15c-ff25-23feaef1029b.png" width='500'>
 
-  * 设计稿的长宽分别为 $ax$ 和 $ay$, 比例为 $x$ : $y$.
-  * 实际显示的大小比例和设计稿保持一致，顾而设为 $bx$ : $by$. 且所有线的实际显示长度是由 `html 的 font-size 值` $f_s$ 线性决定的。
+  * 设计稿的宽高分别为 $ax$ 和 $ay$, 比例为 $x$ : $y$.
+  * 实际显示的范围（我们称其为画布）比例和设计稿保持一致，所以可以设实际显示的画布的宽高为$bx : by$, 且所有线的实际显示长度是由 `html 的 font-size 值` $f_s$ 线性决定的。
   * 屏幕的尺寸不确定，假设其宽度为 $w$, 高度为 $h$
 
   > 小结一下，用了上面提到的 rem 来方案后，我们做出来的页面是一个**和设计稿比例一致的**，并且**大小根据网页运行时的 html 的 font-size的值缩放**的页面。
