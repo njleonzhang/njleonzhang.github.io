@@ -2,7 +2,7 @@
 title: 'Blog of Leon Zhang'
 description: 'Leon Zhang, font end engineer. record and share something here'
 keyword: 'Leon Zhang, 章鹏程'
-url: 'https://njleonzhang.github.io' # your host
+url: 'https://www.njleonzhang.com' # your host
 
 # if you don't need baseurl, you should leave this value blank.
 baseurl: ''
@@ -20,7 +20,7 @@ footer:
 author: 'Leon Zhang'
 nickname: '章鹏程'
 bio: 'FED @ a startup<br/> Former engineer @citrix <br/> Former engineer @trendmicro'
-avatar: '/assets/img/profile.png'
+avatar: '/assets/img/profile.jpeg'
 
 # Search
 search: true
