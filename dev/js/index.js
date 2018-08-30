@@ -230,19 +230,20 @@ $(document).ready(function(){
     /**
      * Copy and copyright
      */
-    function setClipboardData(str) {
-        str += '\n\n著作权归作者所有。\n商业转载请联系作者获得授权,非商业转载请注明出处。\n原文: ' + location.href;
-        $('.post-content').on('copy', function(e) {
-            var data = window.clipboardData || e.originalEvent.clipboardData;
-            data.setData('text/plain', str);
-            e.preventDefault();
-        });
-    }
-    $('.post-content').on('mouseup', function(e) {
-        var txt = window.getSelection();
-        if (txt.toString().length >= 30) {
-            setClipboardData(txt);
-        }
-    });
+    // function setClipboardData(str) {
+    //     str += '\n\n著作权归作者所有。\n商业转载请联系作者获得授权,非商业转载请注明出处。\n原文: ' + location.href;
+    //     $('.post-content').on('copy', function(e) {
+    //         var data = window.clipboardData || e.originalEvent.clipboardData;
+    //         data.setData('text/plain', str);
+    //         e.preventDefault();
+    //     });
+    // }
+
+    // $('.post-content').on('mouseup', function(e) {
+    //     var txt = window.getSelection();
+    //     if (txt.toString().length >= 30) {
+    //         setClipboardData(txt);
+    //     }
+    // });
 
 });
