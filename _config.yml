@@ -66,6 +66,8 @@ markdown: kramdown
 highlighter: rouge
 kramdown:
   input: GFM
+  syntax_highlighter_opts:
+    default_lang: js
 
 # RSS
 RSS: false
