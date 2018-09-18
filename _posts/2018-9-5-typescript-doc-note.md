@@ -4,12 +4,15 @@ title: Typescript 文档读书笔记
 date: 2018-09-05
 categories: 前端
 tags: typescript
+cover: https://www.typescriptlang.org/assets/images/foreground_bluprint.svg
+excerpt: 好记性不如烂笔头。
 ---
-{::options syntax_highlighter_opts="default_lang: typescript" /}
-
 Typescript 文档读过几次, 每次读了就忘, 尝试做下笔记, 把书读薄, 看看有没有用。
 
+{::options syntax_highlighter_opts="default_lang: typescript" /}
+
 # 基本类型
+
 
 ## 原始类型
 `boolean`, `number`, `string`, `object`, `null`, `undefined`, `symbol`
