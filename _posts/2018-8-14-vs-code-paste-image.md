@@ -54,9 +54,9 @@ tags: vscode extension
 
 这个 electron 进程常住于系统中做作为一个 IPC server。当我们**在 vscode 里的 markdown 文件里执行粘贴命令**时，插件就向这个 electron 进程发一个 IPC 消息，这个 electron 进程收到消息后就去读取系统剪贴板，并把结果通过 IPC 消息返回给我们的 vscode 插件。
 
-接下来的事情就简单了，我选用 [tinypng](https://tinypng.com/) 来压缩图片，然后将图片放到 cdn 上，目前只支持[七牛](https://www.qiniu.com/en)。
+接下来的事情就简单了，我选用 [tinypng](https://tinypng.com/) 来压缩图片，然后将图片放到 cdn 上。
 
-> 8月16日更新，七牛不允许使用测试域名了，所以没有备案域名就不能再用了，现在实现了对 github 的做 CDN 的支持。
+> 目前支持多种 CDN, 请移步[项目 README](https://github.com/njleonzhang/vscode-extension-mardown-image-paste#supported-cdn-comparison) 查看.
 
 OK, 打完收工，看一下效果：
 
