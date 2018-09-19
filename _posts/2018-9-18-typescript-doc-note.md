@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Typescript 文档读书笔记
-date: 2018-09-05
+date: 2018-09-18
 categories: 前端
 tags: typescript
 cover: https://www.typescriptlang.org/assets/images/foreground_bluprint.svg
