@@ -119,7 +119,7 @@ class Watcher {
 }
 ```
 
-我们可以发现，上面的 `new Watcher(vm, updateComponent, ...)` 的调用，在 Watcher 里，不仅仅创建了 Watcher 的实例，还 `偷偷摸摸` 的做了一件事，即: 调用了 vue 组件的`更新函数`, `updateComponent`。这会导致组件的渲染函数 `vm._render` 被调用。我们知道 [渲染函数](https://cn.vuejs.org/v2/guide/render-function.html) 是 Vue template 转换来的 (当然也可以直接写)。如果不记得怎么转的了，可以看一下官网上的这个例子：
+我们可以发现，在 Watcher 构造函数里，不仅仅创建了 Watcher 的实例，还 `偷偷摸摸` 的做了一件事，即: 调用了 vue 组件的`更新函数`, `updateComponent`。这会导致组件的渲染函数 `vm._render` 被调用。我们知道 [渲染函数](https://cn.vuejs.org/v2/guide/render-function.html) 是 Vue template 转换来的 (当然也可以直接写)。如果不记得怎么转的了，可以看一下官网上的这个例子：
 
 {% raw %}
 
@@ -189,15 +189,15 @@ class Dep {
 }
 ```
 
-我看可以看到 Dep 是观察者模式里的一个 Observable 有一个 Watcher 的队列，而观察者是 Watcher. 我们知道 `Dep` 与 **Vue reactive 化的属性** 对应, 而 Watcher 与 Vue 组件梳理对应。那么我们可以这样理解 Dep, Dep 是一个 **账单**, 他记录了所有依赖于这个属性的 Vue 组件，一旦发生某个时间之后，则会通知 **账单** 上的所有 Vue 组件去刷新（因为调用的是 Watcher 的 update 方法）。
+我看可以看到 Dep 是观察者模式里的一个 Observable 有一个 Watcher 的队列，而观察者是 Watcher. 我们知道 `Dep` 与 **Vue reactive 化的属性** 对应, 而 Watcher 与 Vue 组件梳理对应。那么我们可以这样理解 Dep, Dep 是一个 **账单**, 他记录了所有依赖于这个属性的 Vue 组件，一旦发生某个事件（属性值发生变化）之后，则会通知 **账单** 上的所有 Vue 组件去刷新（因为 notify 函数里调用的是 Watcher 的 update 方法）。
 
-说到这了，前面的逻辑有点长了，我们总结一下:
+前面的逻辑有点长了，我们总结一下:
 
 1. Vue init 阶段，对所有的属性做了 reactive 化，为每一个属性绑定了 getter 函数, setter 函数以及一个 Dep 对象。
-2. Vue 组件 mount 阶段里调用了 mountComponent方法，此方法中为 Vue 组件创建了一个 Watcher 对象。
+2. Vue 组件 mount 阶段里调用了 mountComponent 方法，此方法中为 Vue 组件创建了一个 Watcher 对象。
 3. Watcher 对象创建的时候，顺带执行了 Vue 的更新函数，这触发了 **Vue reactive 化的属性** 的 get 方法, 并调用了 `dep.depend()`。
 
-好的，那么 depend 这个函数到底做了什么？从定义上看我们知道 `Dep.target` 是一个 Watcher, 在 `dep.depend()` 被调用, 然后 `Dep.target.addDep(this)` 被执行的时候, 此时 `Dep.target` 是什么呢？就是当前创建的这个 Watcher, 即当前 mount 的 Vue 组件对象对应的 Watcher。为什么？注意看上面 Watcher 构造函数里的代码, 在执行 Vue 组件的更新函数前, 有这么一句我们没有解释, 即 `Dep.target = this`. 这就是了, 当前的 Watcher 被预先赋给了 `Dep.target`。
+好的，那么 depend 这个函数到底做了什么？从定义上看我们知道 `Dep.target` 是一个 Watcher。 在 `dep.depend()` 被调用, `Dep.target.addDep(this)` 被执行的时候, 此时 `Dep.target` 是什么呢？就是当前创建的这个 Watcher, 即当前 mount 的 Vue 组件对象对应的 Watcher。为什么？注意看上面 Watcher 构造函数里的代码, 在执行 Vue 组件的更新函数前, 有这么一句我但我前面没有解释, 即 `Dep.target = this`。 当前的 Watcher 被预先赋给了 `Dep.target`!
 
 搞清楚了这个问题后，我们知道了 `dep.depend()` 就等价于执行了当前 Watcher 对应的 addDep 方法, 参数为这个 reactive 属性对应的 Dep 实例. Watcher 的 `addDep` 方法的代码简化后，大致如下:
 
@@ -218,9 +218,9 @@ class Dep {
 }
 ```
 
-`Watcher` 的 `addDep` 方法中, `Watcher` 把这个 `dep` 对象存了下来(这个自然是别有用处，我们就不讨论了)，然后反手又调用了, `dep` 的 `addSub` 方法，一个普通的观察者 subscribe 方法。
+`Watcher` 的 `addDep` 方法中, `Watcher` 把这个 `dep` 对象存了下来(这个自然是别有用处，我们就不讨论了)，然后反手又调用了 `dep` 的 `addSub` 方法 (一个正正经经的观察者模式里的 subscribe 方法)。
 
-经过了这些步骤，`dep.depend()` 终于这个 `Watcher` 记到了自己的账本中了。
+经过了这些步骤，`dep.depend()` 的结果（当然是部分结果）就是调用了 `addSub` 方法，把这个 `Watcher` 记到了自己的账本中了。
 
 这就是 Vue 依赖收集的大致步骤了。
 
@@ -249,7 +249,7 @@ function defineReactive(obj: Object, key: string, ...) {
 
 这个更新派发的过程大致可以表示成上图的样子，从图中我们也可以看出，(render) Watcher 和 Vue 组件实例是一一对应的，reactive 化的属性和 Dep 实例是一一对应的。
 
-我们再借一张[xingbofeng](https://github.com/xingbofeng/xingbofeng.github.io/issues/15)的图，来描述整个过程，大家看看是否能理解:
+我们再借一张[xingbofeng](https://github.com/xingbofeng/xingbofeng.github.io/issues/15)的图，来描述整个依赖收集和派发更新过程，大家看看是否能理解:
 
 ![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/7d769e58-03f7-a633-121e-0133c47487fa.png)
 
@@ -273,6 +273,8 @@ vm.b = 2
 // `vm.b` 是非响应的
 ```
 我们知道属性 `b` 是非响应的, 官网也说了原因: **由于 Vue 会在初始化实例时对属性执行 getter/setter 转化过程**, 这个转化就是在上文介绍的 `defineReactive` 函数里实施的。
+
+再比如，另一个官网提到的问题，数组索引访问:
 
 ```
 var vm = new Vue({
