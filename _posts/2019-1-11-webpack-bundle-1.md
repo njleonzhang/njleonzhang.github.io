@@ -7,9 +7,10 @@ cover: https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/4a3
 tags: webpack
 ---
 
-webpack 是一个神奇的工具, 他大大的提高了前端开发的便利度。使用 webpack 后, 我们可以模块化的组织前端代码, 还能实现运行时的按需加载, 那么 webpack 是怎么做到的呢？本文通过研究 webpack 的输出文件来探讨这个问题。
+webpack 是一个神奇的工具, 他大大的提高了前端开发的便利度。使用 webpack 后, 我们可以模块化的组织前端代码, 还能实现运行时的按需加载, 那么 webpack 是怎么做到的呢？本文通过研究 webpack 的输出文件来探讨同步引入的问题。先开个头，挖个坑。
 
-webpack 版本: 4.28.3
+* webpack 版本: 4.28.3
+* 本文示例代码: [deep-into-webpack-output-sample/output](https://github.com/njleonzhang/deep-into-webpack-output-sample/tree/master/output)
 
 # 一个简单的例子
 
@@ -18,14 +19,15 @@ webpack 版本: 4.28.3
 ```
 // const.js
 export let name = 'leon'
+export default function print() { console.log('print: ' + name) }
 ```
 
 ```
 // index.js
-
-import { name } from './const'
+import print, { name } from './const'
 
 console.log(name)
+print()
 ```
 
 我们用最简单的 webpack 配置来编译这段代码:
@@ -42,7 +44,7 @@ exports.default = {
 }
 ```
 
-编译的完整结果为: [index.dist.js](https://github.com/njleonzhang/deep-into-webpack-output-sample/blob/master/output/dist/index.dist.js), 我们来慢慢分析
+编译的完整结果为: [index.dist.js](https://github.com/njleonzhang/deep-into-webpack-output-sample/blob/master/output/dist/index.dist.js), 我们来慢慢分析。
 
 # 输出文件的结构
 这段输出代码，大架构上就是一个自调函数, 函数体的内容里是 webpack 的启动代码, 函数的参数是各模块的代码组成的一个对象。
@@ -65,15 +67,14 @@ exports.default = {
 )
 ```
 
-从注释我们也可以看到这段输出的代码经纬分明。启动代码的每一行前面都有一段占位注释 `/******/`, 启动代码结束后, 接着一长串星号, 再下面就是各模块的代码了。
-所有的模块的结构都是一致的, 一个函数:
+从注释我们也可以看到这段输出的代码泾渭分明。启动代码的每一行前面都有一段占位注释 `/******/`, 启动代码结束后, 接着一长串星号, 再下面就是各模块的代码了。
+所有的模块的结构都是一致的, 为一个函数:
 
 ```
 function(module, __webpack_exports__, __webpack_require__) {
   // 组件代码
 },
 ```
-
 
 # 启动代码
 我们细细分析一下这段启动代码, 其逻辑如下:
@@ -116,7 +117,7 @@ var installedModules = {};
     }
     ```
 
-    所以所有加载了的模块，都缓存于 `installedModules` 的结构中，其结构为:
+    所有加载了的模块，都缓存于 `installedModules` 中，其结构为:
 
     ```ts
     {
@@ -130,112 +131,116 @@ var installedModules = {};
 
 3. 接着定义了一大批工具函数和变量
 
-```js
-// expose the modules object (__webpack_modules__)
-// 把所有的模块都挂载到 __webpack_require__ 的 m 属性上
-__webpack_require__.m = modules;
+    ```js
+    // expose the modules object (__webpack_modules__)
+    // 把所有的模块都挂载到 __webpack_require__ 的 m 属性上
+    __webpack_require__.m = modules;
 
-// expose the module cache
-// 把所有已加载的模块都挂载到 __webpack_require__ 的 c 属性上
-__webpack_require__.c = installedModules;
+    // expose the module cache
+    // 把所有已加载的模块都挂载到 __webpack_require__ 的 c 属性上
+    __webpack_require__.c = installedModules;
 
-// Object.prototype.hasOwnProperty.call
-// 工具函数, 判断对象上是否有某个属性
-__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+    // Object.prototype.hasOwnProperty.call
+    // 工具函数, 判断对象上是否有某个属性
+    __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 
-// define getter function for harmony exports
-// 工具函数, 为对象(模块的 exports )的属性添加一个 getter 方法，实际上就是用于定义模块的导出属性
-__webpack_require__.d = function(exports, name, getter) {
-  if(!__webpack_require__.o(exports, name)) {
-    Object.defineProperty(exports, name, { enumerable: true, get: getter });
-  }
-};
+    // define getter function for harmony exports
+    // 工具函数, 为对象(模块的 exports )的属性添加一个 getter 方法，实际上就是用于定义模块的导出属性
+    __webpack_require__.d = function(exports, name, getter) {
+      if(!__webpack_require__.o(exports, name)) {
+        Object.defineProperty(exports, name, { enumerable: true, get: getter });
+      }
+    };
 
-// define __esModule on exports
-// 工具方法，为模块的 exports 定义 __esModule 的标记
-__webpack_require__.r = function(exports) {
-  if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-    Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-  }
-  Object.defineProperty(exports, '__esModule', { value: true });
-};
+    // define __esModule on exports
+    // 工具方法，为模块的 exports 定义 __esModule 的标记
+    __webpack_require__.r = function(exports) {
+      if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+        Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+      }
+      Object.defineProperty(exports, '__esModule', { value: true });
+    };
 
-// create a fake namespace object
-// mode & 1: value is a module id, require it
-// mode & 2: merge all properties of value into the ns
-// mode & 4: return value when already ns object
-// mode & 8|1: behave like require
-__webpack_require__.t = function(value, mode) {
-  if(mode & 1) value = __webpack_require__(value);
-  if(mode & 8) return value;
-  if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-  var ns = Object.create(null);
-  __webpack_require__.r(ns);
-  Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-  if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-  return ns;
-};
+    // create a fake namespace object
+    // mode & 1: value is a module id, require it
+    // mode & 2: merge all properties of value into the ns
+    // mode & 4: return value when already ns object
+    // mode & 8|1: behave like require
+    __webpack_require__.t = function(value, mode) {
+      if(mode & 1) value = __webpack_require__(value);
+      if(mode & 8) return value;
+      if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+      var ns = Object.create(null);
+      __webpack_require__.r(ns);
+      Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+      if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+      return ns;
+    };
 
-// getDefaultExport function for compatibility with non-harmony modules
-__webpack_require__.n = function(module) {
-  var getter = module && module.__esModule ?
-    function getDefault() { return module['default']; } :
-    function getModuleExports() { return module; };
-  __webpack_require__.d(getter, 'a', getter);
-  return getter;
-};
-```
+    // getDefaultExport function for compatibility with non-harmony modules
+    __webpack_require__.n = function(module) {
+      var getter = module && module.__esModule ?
+        function getDefault() { return module['default']; } :
+        function getModuleExports() { return module; };
+      __webpack_require__.d(getter, 'a', getter);
+      return getter;
+    };
+    ```
 
-4. 最后加载 entry 模块，并返回其模块导出，我们写的模块带吗正式启动。
+4. 最后加载 entry 模块(webpack配置里的个 entry)，并返回其模块导出，我们写的模块代码这才正式被执行。
 
-```
-return __webpack_require__(__webpack_require__.s = "./index.js");
-```
+    ```
+    return __webpack_require__(__webpack_require__.s = "./index.js");
+    ```
 
 # 模块代码
 1. entry 模块, index.js
 
-`index.js` 模块的这个函数，在 `__webpack_require__` 里被执行。
+    `index.js` 模块的这个函数，在 `__webpack_require__` 里被执行。
 
-```js
-modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-```
+    ```js
+    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+    ```
 
-```js
-(function(module, __webpack_exports__, __webpack_require__) {
-"use strict";
-// 为模块的 exports 定义 __esModule 属性。
-__webpack_require__.r(__webpack_exports__);
+    ```js
+    (function(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+      // 为模块的 exports 定义 __esModule 属性。
+      __webpack_require__.r(__webpack_exports__);
 
-// 用 __webpack_require 去加载 const.js 模块
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./const */ "./const.js");
+      // 用 __webpack_require 去加载 const.js 模块
+      /* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./const */ "./const.js");
 
-// 打印出模块的导出（module.exports）的 name 属性。
-console.log(_const__WEBPACK_IMPORTED_MODULE_0__["name"])
-Object(_const__WEBPACK_IMPORTED_MODULE_0__["default"])()
-/***/ }),
-```
+      // 打印出模块的导出（module.exports）的 name 属性, 执行 default
+      // 属性对应的函数，即 print。
+      // 这 2 行对应我们写的代码。
+      console.log(_const__WEBPACK_IMPORTED_MODULE_0__["name"])
+      Object(_const__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    /***/ }),
+    ```
+
+    > 这里 `_const__WEBPACK_IMPORTED_MODULE_0__["default"]` 就是 `print` 函数, webpack 生成的代码里为什么加个 Object() 包一下呢？是为了兼容什么特殊场景么？
 
 2. const.js 模块
 
-```js
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-"use strict";
+    ```js
+    /***/ (function(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
 
-// 为模块的 exports 定义 __esModules 属性
-__webpack_require__.r(__webpack_exports__);
+    // 为模块的 exports 定义 __esModules 属性
+    __webpack_require__.r(__webpack_exports__);
 
-// 为模块定义导出属性。有个 name 的导出属性，其 get 函数为 return name
-// 有个 default 的属性，其 get 函数 return print
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return print; });
+    // 为模块定义导出属性。有个 name 的导出属性，其 get 函数为 return name
+    // 有个 default 的属性，其 get 函数 return print
+    /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
+    /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return print; });
 
-let name = 'leon'
-function print() { console.log('print: ' + name) }
-/***/ }),
-```
+    let name = 'leon'
+    function print() { console.log('print: ' + name) }
+    /***/ }),
+    ```
 
-逻辑还是很容易理解的，我们写的模块在 webpack 的处理下，编程了 es5 的函数，并在 webpack 启动代码构建的环境里有序的运行。最后我们来看一眼我们模块在 webpack 模块缓存 installedModules 里的样子，应该和你的想象一致吧。
+逻辑还是很容易理解的，我们写的模块被 webpack 的处理成了能兼容 es5 语法里的模块对象，并在 webpack 启动代码构建的环境里有序的运行。最后我们来看一眼我们模块在 webpack 模块缓存 installedModules 里的样子，应该和你的想象一致吧。
 
 ![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/5907616e-1ab8-52f8-3ad8-f47e0e7499fc.png)
 
