@@ -247,4 +247,4 @@ var installedModules = {};
 ![](https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/83a5a315-4694-2811-bdfc-88afb5ba8c58.png)
 
 # 结语
-本文中我们通过一个什么简单的例子分析了 webpack 启动代码的一部分内容，例子虽然简单，但是窥斑见豹，万变不离其宗。当然还有一些内容比如 `__webpack_require__.t` 和 `__webpack_require__.n`，我们并未涉及, 后续文章中我们继续分析。
+本文中我们通过一个简单的例子分析了 webpack 启动代码的一部分内容，例子虽然简单，但是窥斑见豹，万变不离其宗。当然还有一些内容比如 `__webpack_require__.t` 和 `__webpack_require__.n`，我们并未涉及, 后续文章中我们继续分析。
