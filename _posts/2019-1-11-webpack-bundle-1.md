@@ -1,6 +1,6 @@
 ---
 layout: post
-title: webpack 输出文件分析 1 - 同步引入
+title: webpack 输出文件分析 1 - 自编译同步引入
 date: 2018-12-30
 categories: 前端
 cover: https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/4a30ce00-c8ef-f60a-9de8-c548cde581a0.png
@@ -161,6 +161,7 @@ var installedModules = {};
       Object.defineProperty(exports, '__esModule', { value: true });
     };
 
+    // 暂时忽略
     // create a fake namespace object
     // mode & 1: value is a module id, require it
     // mode & 2: merge all properties of value into the ns
@@ -177,6 +178,7 @@ var installedModules = {};
       return ns;
     };
 
+    // 暂时忽略
     // getDefaultExport function for compatibility with non-harmony modules
     __webpack_require__.n = function(module) {
       var getter = module && module.__esModule ?
