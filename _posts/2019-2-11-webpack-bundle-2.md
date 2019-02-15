@@ -9,7 +9,7 @@ tags: webpack
 
 [上篇](https://www.njleonzhang.com/2018/12/30/webpack-bundle-1.html)中，我们分析了 webpack 是如何处理自编译同步加载的，本篇中我们来分析 webpack 是如何处理模块打包和加载的。
 
-示例项目：https://github.com/njleonzhang/deep-into-webpack-output-sample
+> 示例项目：https://github.com/njleonzhang/deep-into-webpack-output-sample
 
 我们还是使用[上篇](https://www.njleonzhang.com/2018/12/30/webpack-bundle-1.html)中那个简单的例子, 只不过这次我们把它编译成模块:
 
