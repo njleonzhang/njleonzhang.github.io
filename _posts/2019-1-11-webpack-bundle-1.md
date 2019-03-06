@@ -76,6 +76,15 @@ function(module, __webpack_exports__, __webpack_require__) {
 },
 ```
 
+而该自调函数的参数 `modules` 即是包含该文件内所有模块的一个对象，其结构如下:
+
+```
+// modules
+{
+  [id: String]: Function // 上面提到的哪个函数
+}
+```
+
 # 启动代码
 我们细细分析一下这段启动代码, 其逻辑如下:
 

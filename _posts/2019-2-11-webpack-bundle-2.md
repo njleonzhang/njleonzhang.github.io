@@ -187,34 +187,12 @@ console.log(name1, name2, name3, name4, name5)
 /************************************************************************/
 (
   {
-    "../output/dist/index.amd.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
-  },
-  {
-    "../output/dist/index.cmd.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
-  },
-  {
-    "../output/dist/index.cmd2.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
-  },
-  {
-    "../output/dist/index.umd.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
-  },
-  {
-    "../output/dist/index.var.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
-  },
-  {
-    "index.js": (function(module, __webpack_exports__, __webpack_require__) {
-      ...
-    })
+    "../output/dist/index.amd.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
+    "../output/dist/index.cmd.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
+    "../output/dist/index.cmd2.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
+    "../output/dist/index.umd.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
+    "../output/dist/index.var.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
+    "index.js": (function(module, __webpack_exports__, __webpack_require__) { ... }),
   },
 )
 ```

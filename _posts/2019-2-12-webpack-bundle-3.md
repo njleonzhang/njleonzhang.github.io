@@ -93,7 +93,7 @@ module.exports = {
 // object to store loaded and loading chunks
 // undefined = chunk not loaded, null = chunk preloaded/prefetched
 // Promise = chunk loading, 0 = chunk loaded
-// 用于存储已加载和加载中的 chunk 的 loading, 异步模块在 webpack 中被称为 chunk
+// 用于存储已加载和加载中的 chunk, 异步模块在 webpack 中被称为 chunk
 var installedChunks = {
   "index": 0
 };
