@@ -409,3 +409,5 @@ declare var FormData: {
 
 # 总结
 本文大体的介绍了 Web 环境和 Node 环境里的二进制类型, 类型有点多, 但总体还是有迹可循, 各司其职的。我们只要了解他们之间的关系，未来用起来就能得心应手了。
+
+扩展阅读: [浏览器中的二进制以及相关转换](https://mp.weixin.qq.com/s/zqMtZ9aZEdCqM0q6SUrqDQ)
