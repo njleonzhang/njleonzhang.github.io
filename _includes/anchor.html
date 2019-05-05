@@ -27,9 +27,9 @@ Author: Ray-Eldath
         text-decoration: underline;
     }
 
-    html{
+    /* html{
         scroll-behavior: smooth;
-    }
+    } */
 </style>
 <script>
     $(document).ready(function() {
@@ -63,6 +63,13 @@ Author: Ray-Eldath
 
             anchor.appendChild(anchorIcon)
             node.appendChild(anchor)
+        }
+
+        let $postContent = $('.post-content')
+        let height =  $postContent.height()
+
+        if (height <= 15000) {
+            $('html').css('scroll-behavior', 'smooth')
         }
     })
 </script>
