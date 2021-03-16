@@ -4,6 +4,7 @@ title: Deep into React 2 - setState 更新
 date: 2021-03-16
 categories: 前端
 tags: frontend react
+cover: https://raw.githubusercontent.com/njleonzhang/image-bed/master/assets/71603321-aa3b-954f-bae2-64965bd91fc9.png
 ---
 
 上次我们分析了下面这个例子首次 mount 的过程
